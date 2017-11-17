@@ -1,6 +1,7 @@
 package me.soulyana.soultrustbank.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ public class UserRole {
     private String role;
 
     @ManyToMany(mappedBy = "roles",fetch=FetchType.LAZY)
-    private Set<UserData> users;
+    private Set<UserData> users = new HashSet<UserData>();
 
     public UserRole() {
     }
@@ -45,6 +46,9 @@ public class UserRole {
 
     public void setUsers(Set<UserData> users) {
         this.users = users;
+    }
+    public void addUserData(UserData userData) {
+        users.add(userData);
     }
 }
 

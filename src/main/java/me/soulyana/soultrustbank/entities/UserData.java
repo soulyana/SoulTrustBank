@@ -33,9 +33,13 @@ public class UserData {
 
     private String lastName;
 
+    private String ssn;
+
     private String username;
 
     private String password;
+
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -45,13 +49,14 @@ public class UserData {
         roles = new HashSet<>();
     }
 
-    public UserData(int acct, String action, double amt, String reason, String firstName, String lastName, String username, String password, Set<UserRole> roles) {
+    public UserData(int acct, String action, double amt, String reason, String firstName, String lastName, String ssn, String username, String password, Set<UserRole> roles) {
         this.acct = acct;
         this.action = action;
         this.amt = amt;
         this.reason = reason;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.ssn = ssn;
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -113,6 +118,14 @@ public class UserData {
         this.lastName = lastName;
     }
 
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -129,6 +142,14 @@ public class UserData {
         this.password = password;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public Set<UserRole> getRoles() {
         return roles;
     }
@@ -137,7 +158,7 @@ public class UserData {
         this.roles = roles;
     }
 
-    public void addRoles(UserRole aRole) {
+    public void addRole(UserRole aRole) {
         roles.add(aRole);
     }
 }

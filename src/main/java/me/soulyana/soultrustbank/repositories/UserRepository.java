@@ -5,6 +5,11 @@ import me.soulyana.soultrustbank.entities.UserRole;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<UserData, Long> {
-    UserRole findByRole(String role);
+    UserData findByUsername(String username);
+    UserData findBySsn(String ssn);
+    UserData findByAcct(int acct);
+
+    Long countByUsername(String username);
+    Long countByAcct(int acct);
 
 }
