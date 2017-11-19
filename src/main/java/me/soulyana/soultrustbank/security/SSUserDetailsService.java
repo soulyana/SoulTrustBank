@@ -1,8 +1,7 @@
 package me.soulyana.soultrustbank.security;
 
 
-import me.soulyana.soultrustbank.entities.UserData;
-import me.soulyana.soultrustbank.entities.UserRole;
+import me.soulyana.soultrustbank.entities.User;
 import me.soulyana.soultrustbank.repositories.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,23 +28,23 @@ public class SSUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            UserData user = userRepository.findByUsername(username);
+            User user = userRepository.findByUsername(username);
             if (user == null) {
                 return null;
             }
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
+            return null; // new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user));
         } catch(Exception e) {
 
         }
         return null;
     }
 
-    private Set<GrantedAuthority> getAuthorities(UserData user) {
-        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        for (UserRole eachRole: user.getRoles()) {
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(eachRole.getRole());
-            authorities.add(grantedAuthority);
-        }
-        return authorities;
-    }
+//    private Set<GrantedAuthority> getAuthorities(User user) {
+//        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+//        for (UserRole eachRole: user.getRoles()) {
+//            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(eachRole.getRole());
+//            authorities.add(grantedAuthority);
+//        }
+//        return authorities;
+//    }
 }

@@ -5,8 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<!--add div fragment here-->
-<div class="container">
+<div th:replace="index :: global-container" class="container">
     <h4>New User Bank Account Registration</h4>
     <form autocomplete="off" action="#" th:action="@{/register}"
           th:object="${user}" method="post">

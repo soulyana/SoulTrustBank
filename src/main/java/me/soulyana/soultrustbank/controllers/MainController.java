@@ -1,9 +1,9 @@
 package me.soulyana.soultrustbank.controllers;
 
-import me.soulyana.soultrustbank.entities.UserData;
+import me.soulyana.soultrustbank.entities.AccountService;
+import me.soulyana.soultrustbank.entities.User;
 import me.soulyana.soultrustbank.entities.UserService;
-import me.soulyana.soultrustbank.repositories.RoleRepository;
-import me.soulyana.soultrustbank.repositories.UserRepository;
+import me.soulyana.soultrustbank.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +20,14 @@ import java.security.Principal;
 public class MainController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AccountService  accountService;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
+
+
 
     @RequestMapping("/")
     public String showMainPage(Principal p) {
@@ -43,19 +51,19 @@ public class MainController {
 
     @GetMapping("/register")
     public String showRegistrationPage(Model model) {
-        model.addAttribute("user", new UserData());
+        //model.addAttribute("user", new User());
         model.addAttribute("registration", "2");
         return "registration";
     }
 
     @PostMapping("/register")
-    public String processRegistrationPage(@Valid @ModelAttribute("user") UserData user, BindingResult result, Model model) {
+    public String processRegistrationPage(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
         model.addAttribute("user", user);
 
         if(result.hasErrors()) {
             return "registration";
         } else {
-            userService.saveUserData(user);
+            userService.saveUser(user);
             model.addAttribute("message", "User Account Successfully Created!");
         }
         return "index";
@@ -73,12 +81,5 @@ public class MainController {
         model.addAttribute("title", "Withdrawl");
         model.addAttribute("withdrawl", "4");
         return "withdrawl";
-    }
-
-    @RequestMapping("/transhist")
-    public String showTransHist(Model model) {
-        model.addAttribute("title", "Transaction History");
-        model.addAttribute("transhist", "5");
-        return "transhist";
     }
 }
